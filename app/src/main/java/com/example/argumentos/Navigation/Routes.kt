@@ -7,38 +7,22 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class Routes : NavKey {
     @Serializable
-    data object Home : Routes()
+    data object Prueba_1 : Routes()  // ← MANTENEMOS "Prueba_1"
 
     @Serializable
     data class CapturarDatos(
         val user: String,
         val pass: String
+    ) : Routes()  // ← MANTENEMOS "CapturarDatos"
+
+    @Serializable
+    data object ProductListScreen : Routes()
+
+    @Serializable
+    data class ProductDetailScreen(
+        val product: Producto
     ) : Routes()
 
     @Serializable
-    data class detailProducto(
-        val id: Int
-    ) : Routes()
-
-    @Serializable
-    data class detailProductRoute(
-        val producto: Producto,
-        val isInCart: Boolean
-    ) : Routes()
-
-    @Serializable
-    data class CartScreen(
-        val producto: List<Producto>,
-        val totalPrice: Double
-    ) : Routes()
-
-    @Serializable
-    data class ProductListScreen(
-        val user: String,
-        val pass: String,
-        val producto: List<Producto>
-    ) : Routes()
-
-    // @Serializable
-    // data class detailProductRoute( val producto: Producto) : Routes()
+    data object CartScreen : Routes()
 }

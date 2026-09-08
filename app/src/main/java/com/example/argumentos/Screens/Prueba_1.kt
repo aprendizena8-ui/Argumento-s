@@ -1,126 +1,92 @@
 package com.example.argumentos.Screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddShoppingCart
-import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.argumentos.Models.Producto
+import com.example.argumentos.R
 
 @Composable
-fun ProductDetailScreen(
-    product: Producto,
-    isInCart: Boolean,
-    onAddToCart: (Producto) -> Unit,
-    onNavigateToCart: () -> Unit,
-    onBack: () -> Unit
+fun Argumentos(  // ← MANTENEMOS EL NOMBRE "Argumentos"
+    onNextScreen: (d1: String, d2: String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
+    var dato by remember { mutableStateOf("") }
+    var dato2 by remember { mutableStateOf("") }
+
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Surface(
+        // Logo SENA
+        Image(
+            painter = painterResource(id = R.drawable.sena_1800),
+            contentDescription = "Logo SENA",
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp),
-            color = MaterialTheme.colorScheme.surfaceVariant,
-            shape = MaterialTheme.shapes.medium
-        ) {
-            Box(contentAlignment = Alignment.Center) {
-                Text(" ${product.name}", style = MaterialTheme.typography.titleLarge)
-            }
-        }
-
-        Text(
-            text = product.name,
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold
+                .height(120.dp)
         )
 
+        Spacer(modifier = Modifier.height(32.dp))
+
         Text(
-            text = "$${product.price}",
-            style = MaterialTheme.typography.headlineMedium,
+            text = "Login",
+            style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.primary
         )
 
-        HorizontalDivider()
+        Spacer(modifier = Modifier.height(24.dp))
 
-        Text(
-            text = product.descripcion,
-            style = MaterialTheme.typography.bodyLarge
+        TextField(
+            value = dato,
+            onValueChange = { dato = it },
+            label = { Text("Usuario") },
+            modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        if (isInCart) {
-            OutlinedButton(
-                onClick = onNavigateToCart,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Icon(Icons.Default.Check, contentDescription = null)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("En el carrito — Ver carrito")
-            }
-        } else {
-            Button(
-                onClick = { onAddToCart(product) },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Icon(Icons.Default.AddShoppingCart, contentDescription = null)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Añadir al Carrito")
-            }
-        }
+        TextField(
+            value = dato2,
+            onValueChange = { dato2 = it },
+            label = { Text("Contraseña") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { onBack() },
+            onClick = { onNextScreen(d1 = dato, d2 = dato2) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Icon(Icons.Default.ArrowBackIosNew, contentDescription = null)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Regresar....")
+            Text("Enviar")
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewDetail() {
-    val producto = Producto(
-        1,
-        "Auriculares Bluetooth",
-        59.99,
-        "Cancelación de ruido activa, 30h de bateria.",
-        "imagen"
-    )
-    ProductDetailScreen(
-        product = producto,
-        isInCart = true,
-        onAddToCart = {},
-        onNavigateToCart = {},
-        onBack = {}
-    )
+fun GreetingPreview() {
+    Argumentos(onNextScreen = { _, _ -> })
 }
