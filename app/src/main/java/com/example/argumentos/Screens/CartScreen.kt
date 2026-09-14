@@ -1,13 +1,17 @@
 package com.example.argumentos.Screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -20,10 +24,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.argumentos.Models.Producto
+import com.example.argumentos.R
 
 @Composable
 fun CartScreen(
@@ -40,6 +46,13 @@ fun CartScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.productocarrito),
+                contentDescription = "Carrito Vacío",
+                modifier = Modifier
+                    .size(120.dp)
+                    .padding(16.dp)
+            )
             Text(
                 text = "Tu carrito está vacío",
                 style = MaterialTheme.typography.titleLarge,
@@ -77,6 +90,14 @@ fun CartScreen(
                             .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        Image(
+                            painter = painterResource(id = product.imageRes),
+                            contentDescription = product.name,
+                            modifier = Modifier.size(50.dp)
+                        )
+
+                        Spacer(modifier = Modifier.width(12.dp))
+
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = product.name,
@@ -89,6 +110,7 @@ fun CartScreen(
                                 color = MaterialTheme.colorScheme.primary
                             )
                         }
+
                         Text(
                             text = "✕",
                             style = MaterialTheme.typography.headlineSmall,
@@ -150,9 +172,27 @@ fun CartScreen(
 @Composable
 fun PreviewCartScreen() {
     val productos = listOf(
-        Producto(1, "Mouse", 80000.0, "", ""),
-        Producto(2, "Auriculares Bluetooth", 59.99, "", ""),
-        Producto(3, "Monitor 4K", 350.0, "", "")
+        Producto(
+            id = 1,
+            name = "Mouse",
+            price = 80000.0,
+            description = "Mouse óptico",
+            imageRes = R.drawable.productocarrito
+        ),
+        Producto(
+            id = 2,
+            name = "Auriculares Bluetooth",
+            price = 59.99,
+            description = "Auriculares inalámbricos",
+            imageRes = R.drawable.productocarrito
+        ),
+        Producto(
+            id = 3,
+            name = "Monitor 4K",
+            price = 350.0,
+            description = "Monitor de 27 pulgadas",
+            imageRes = R.drawable.productocarrito
+        )
     )
     CartScreen(
         cartItems = productos,

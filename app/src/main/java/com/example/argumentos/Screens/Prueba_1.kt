@@ -1,92 +1,77 @@
 package com.example.argumentos.Screens
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.argumentos.R
 
 @Composable
-fun Argumentos(
-    onNextScreen: (d1: String, d2: String) -> Unit,
-    modifier: Modifier = Modifier
+fun Prueba_1(
+    onNextScreen: (String, String) -> Unit
 ) {
-    var dato by remember { mutableStateOf("") }
-    var dato2 by remember { mutableStateOf("") }
+    var usuario by remember { mutableStateOf("") }
+    var pass by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
 
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Logo SENA
-        Image(
-            painter = painterResource(id = R.drawable.sena_1800),
-            contentDescription = "Logo SENA",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(120.dp)
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        Text(
-            text = "Login",
-            style = MaterialTheme.typography.headlineLarge,
-            color = MaterialTheme.colorScheme.primary
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        TextField(
-            value = dato,
-            onValueChange = { dato = it },
-            label = { Text("Usuario") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        Text(text = "Iniciar Sesión", style = MaterialTheme.typography.headlineMedium)
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        TextField(
-            value = dato2,
-            onValueChange = { dato2 = it },
-            label = { Text("Contraseña") },
-            modifier = Modifier.fillMaxWidth()
+        OutlinedTextField(
+            value = usuario,
+            onValueChange = {
+                usuario = it
+                errorMessage = ""
+            },
+            label = { Text("Usuario") },
+            isError = errorMessage.isNotEmpty(),
+            singleLine = true
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            value = pass,
+            onValueChange = {
+                pass = it
+                errorMessage = ""
+            },
+            label = { Text("Contraseña") },
+            isError = errorMessage.isNotEmpty(),
+            singleLine = true
+        )
+
+        if (errorMessage.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = errorMessage,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { onNextScreen(d1 = dato, d2 = dato2) },
-            modifier = Modifier.fillMaxWidth()
+            onClick = {
+                if (usuario.isBlank() || pass.isBlank()) {
+                    errorMessage = "Por favor ingrese usuario y contraseña"
+                } else {
+                    onNextScreen(usuario, pass)
+                }
+            }
         ) {
-            Text("Enviar")
+            Text("Enviar Datos")
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Argumentos(onNextScreen = { _, _ -> })
 }

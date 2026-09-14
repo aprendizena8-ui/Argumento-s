@@ -1,6 +1,6 @@
 package com.example.argumentos.Navigation
 
-import androidx.navigation.NavKey
+import androidx.navigation3.runtime.NavKey
 import com.example.argumentos.Models.Producto
 import kotlinx.serialization.Serializable
 
