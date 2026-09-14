@@ -7,13 +7,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class Routes : NavKey {
     @Serializable
-    data object Prueba_1 : Routes()  // ← MANTENEMOS "Prueba_1"
+    data object Prueba_1 : Routes()
 
     @Serializable
     data class CapturarDatos(
         val user: String,
         val pass: String
-    ) : Routes()  // ← MANTENEMOS "CapturarDatos"
+    ) : Routes()
 
     @Serializable
     data object ProductListScreen : Routes()

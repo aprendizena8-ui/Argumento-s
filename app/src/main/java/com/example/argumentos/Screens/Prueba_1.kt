@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.example.argumentos.R
 
 @Composable
-fun Argumentos(  // ← MANTENEMOS EL NOMBRE "Argumentos"
+fun Argumentos(
     onNextScreen: (d1: String, d2: String) -> Unit,
     modifier: Modifier = Modifier
 ) {

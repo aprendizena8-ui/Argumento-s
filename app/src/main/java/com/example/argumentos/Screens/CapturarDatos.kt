@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CapturarDatos(  // ← MANTENEMOS EL NOMBRE "CapturarDatos"
+fun CapturarDatos(
     user: String,
     pass: String,
     onExploreClick: () -> Unit,
